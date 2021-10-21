@@ -1,0 +1,3 @@
+## FEATURES
+- VITE
+- React JS
