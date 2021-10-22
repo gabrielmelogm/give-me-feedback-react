@@ -15,7 +15,7 @@ type Message = {
 
 let messagesQueue: Message[] = []
 
-const socket = io('http://localhost:4000')
+const socket = io('https://give-me-feedback-node.herokuapp.com')
 
 socket.on('new_message', newMessage => {
   messagesQueue.push(newMessage)
