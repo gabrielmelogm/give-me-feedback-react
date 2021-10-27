@@ -121,5 +121,9 @@
     &:hover {
       filter: brightness(0.9);
     }
+    &:disabled {
+      cursor: not-allowed;
+      filter: saturate(10%);
+    }
   }
 }

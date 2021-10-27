@@ -7,16 +7,19 @@ import styles from './styles.module.scss'
 export const SendMessageForm = () => {
   const { user, signOut } = useContext(AuthContext)
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   async function handleSendMessage(event: FormEvent) {
+    setLoading(true)
     event.preventDefault()
 
     if (!message.trim()) {
-      return
+      return setLoading(false)
     }
 
     await api.post('/messages', { message })
     setMessage('')
+    setLoading(false)
   }
 
   return (
@@ -43,7 +46,10 @@ export const SendMessageForm = () => {
           placeholder="Qual a sua expectativa para o evento?"
           onChange={event => setMessage(event.target.value)}
           value={message} />
-        <button type="submit">Enviar mensagem</button>
+        <button
+          type="submit"
+          disabled={loading}
+        >{(!loading) ? `Enviar mensagem` : `Enviando`}</button>
       </form>
     </div>
   )

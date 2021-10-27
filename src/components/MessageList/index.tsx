@@ -15,7 +15,7 @@ type Message = {
 
 let messagesQueue: Message[] = []
 
-const socket = io('https://give-me-feedback-node.herokuapp.com')
+const socket = io(`${import.meta.env.VITE_API_URL}`)
 
 socket.on('new_message', newMessage => {
   messagesQueue.push(newMessage)
@@ -23,6 +23,7 @@ socket.on('new_message', newMessage => {
 
 const MessageList = () => {
   const [messages, setMessages] = useState<Message[]>([])
+  const [animation, setAnimation] = useState(false)
 
   useEffect(() => {
     setInterval(() => {
@@ -44,15 +45,27 @@ const MessageList = () => {
     })
   }, [])
 
+  useEffect(() => {
+    setAnimation(true)
+  }, [messages])
+
+  useEffect(() => {
+    if (animation) {
+      setTimeout(() => {
+        setAnimation(false)
+      }, 800)
+    }
+  }, [animation])
+
   return (
     <div className={styles.messageListWrapper}>
       <img src={logoImg} alt="DoWhile 2021" />
 
       <ul className={styles.messageList}>
         {
-          messages.map(message => {
+          messages.map((message, index) => {
             return (
-              <li key={message.id} className={styles.message}>
+              <li key={message.id} className={`${styles.message} ${(animation && index == 0) ? styles.newMessage : ''}`}>
                 <p className={styles.messageContent}>{message.text}</p>
                 <div className={styles.messageUser}>
                   <div className={styles.userImage}>

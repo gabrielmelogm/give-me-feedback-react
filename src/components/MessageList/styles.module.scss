@@ -56,3 +56,16 @@
     }
   }
 }
+
+.newMessage {
+  animation: sendMessage 1000ms ease;
+}
+
+@keyframes sendMessage {
+  from {
+    transform: translateX(-20px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
